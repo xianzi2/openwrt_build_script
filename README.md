@@ -1,6 +1,6 @@
 # OpenWrt X86_64 构建脚本
 
-### 原存档来自：https://init2.cooluc.com（本项目对原存档进行了少量精简）
+### 原存档来自：https://init2.cooluc.com （本项目对原存档进行了少量精简）
 
 ---------------
 
