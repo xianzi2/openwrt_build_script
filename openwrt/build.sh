@@ -253,6 +253,15 @@ fi
 rm -f 0*-*.sh
 rm -rf ../master
 
+# xfrpc zh_hans
+mkdir feeds/luci/applications/luci-app-xfrpc/po/zh_Hans
+curl -sO https://raw.githubusercontent.com/pmkol/openwrt_build_script/x86_64/openwrt/zhcn/xfrpc.po
+chmod 0664 xfrpc.po
+mv xfrpc.po feeds/luci/applications/luci-app-xfrpc/po/zh_Hans/xfrpc.po
+
+# distfeeds.conf settings
+sed -i 's#raw.cooluc.com/sbwml/kmod-x86_64/main#fastly.jsdelivr.net/gh/sbwml/kmod-x86_64@main#g' package/new/default-settings/default/zzz-default-settings
+
 # Load devices Config
 if [ "$platform" = "x86_64" ]; then
     curl -s https://$mirror/openwrt/23-config-musl-x86 > .config
