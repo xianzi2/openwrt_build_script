@@ -169,6 +169,11 @@ git clone https://$github/openwrt/routing master/routing --depth=1
 # openwrt-23.05
 [ "$1" = "rc2" ] && git clone https://$github/openwrt/openwrt -b openwrt-23.05 master/openwrt-23.05 --depth=1
 
+# openclash master
+git clone https://github.com/vernesong/OpenClash master/OpenClash --depth=1
+mkdir -p openwrt/package/feeds/luci
+cp -r master/OpenClash/luci-app-openclash openwrt/package/feeds/luci/luci-app-openclash
+
 # immortalwrt master
 git clone https://$github/immortalwrt/packages master/immortalwrt_packages --depth=1
 [ "$(whoami)" = "runner" ] && endgroup
