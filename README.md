@@ -1,18 +1,14 @@
-# NanoPi R4S/R5S/R5C & X86_64 OpenWrt 简易构建脚本存档
+# OpenWrt X86_64 构建脚本
 
-### 存档来自：https://init2.cooluc.com
+### 原存档来自：https://init2.cooluc.com（本项目对原存档进行了少量精简）
 
 ---------------
 
 ## 基于 Linux 6.6 LTS 固件下载:
 
-#### NanoPi R4S: https://r4s.cooluc.com
+#### X86_64: https://github.com/pmkol/openwrt_build_script/releases
 
-#### NanoPi R5S/R5C: https://r5s.cooluc.com
-
-#### X86_64: https://x86.cooluc.com
-
-#### 构建来源: https://github.com/sbwml/builder
+#### 构建来源: https://github.com/pmkol/openwrt_build_script
 
 ---------------
 
