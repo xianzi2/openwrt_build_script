@@ -111,18 +111,6 @@ export MINIMAL_BUILD=y
 
 ## 构建 OpenWrt 23.05 最新 Releases
 
-### nanopi-r4s
-```shell
-# linux-6.6
-bash <(curl -sS https://init2.cooluc.com/build.sh) rc2 nanopi-r4s
-```
-
-### nanopi-r5s/r5c
-```shell
-# linux-6.6
-bash <(curl -sS https://init2.cooluc.com/build.sh) rc2 nanopi-r5s
-```
-
 ### x86_64
 ```shell
 # linux-6.6
@@ -130,18 +118,6 @@ bash <(curl -sS https://init2.cooluc.com/build.sh) rc2 x86_64
 ```
 
 ## 构建 OpenWrt 23.05 开发版（23.05-SNAPSHOT）
-
-### nanopi-r4s
-```shell
-# linux-6.6
-bash <(curl -sS https://init2.cooluc.com/build.sh) dev nanopi-r4s
-```
-
-### nanopi-r5s/r5c
-```shell
-# linux-6.6
-bash <(curl -sS https://init2.cooluc.com/build.sh) dev nanopi-r5s
-```
 
 ### x86_64
 ```shell
@@ -173,18 +149,6 @@ bash <(curl -sS https://init2.cooluc.com/build.sh) dev x86_64
 ```
 
 ### 三、在本地 Linux 执行基于你自己仓库的构建脚本，即可编译所需固件
-
-#### nanopi-r4s openwrt-23.05
-```shell
-# linux-6.6
-bash <(curl -sS https://raw.githubusercontent.com/你的用户名/r4s_build_script/master/openwrt/build.sh) rc2 nanopi-r4s
-```
-
-#### nanopi-r5s/r5c openwrt-23.05
-```shell
-# linux-6.6
-bash <(curl -sS https://raw.githubusercontent.com/你的用户名/r4s_build_script/master/openwrt/build.sh) rc2 nanopi-r5s
-```
 
 #### x86_64 openwrt-23.05
 ```shell
