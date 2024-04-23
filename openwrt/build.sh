@@ -171,8 +171,14 @@ git clone https://$github/openwrt/routing master/routing --depth=1
 
 # openclash master
 git clone https://github.com/vernesong/OpenClash master/OpenClash --depth=1
-mkdir -p openwrt/package/feeds/luci
-cp -r master/OpenClash/luci-app-openclash openwrt/package/feeds/luci/luci-app-openclash
+if [ -d "master/OpenClash" ]; then
+    sed -i 's/("OpenClash"), 50/("OpenClash"), 20/' master/OpenClash/luci-app-openclash/luasrc/controller/openclash.lua
+    mkdir -p openwrt/package/feeds/luci
+    cp -r master/OpenClash/luci-app-openclash openwrt/package/feeds/luci/luci-app-openclash
+else
+    echo -e "Failed to download openclash"
+    exit 1
+fi
 
 # immortalwrt master
 git clone https://$github/immortalwrt/packages master/immortalwrt_packages --depth=1
