@@ -270,6 +270,13 @@ curl -sO https://raw.githubusercontent.com/pmkol/openwrt_build_script/x86_64/ope
 chmod 0664 xfrpc.po
 mv xfrpc.po feeds/luci/applications/luci-app-xfrpc/po/zh_Hans/xfrpc.po
 
+# dockerd patch
+sed -i "s/iptables '1'/iptables '0'/g" feeds/packages/utils/dockerd/files/etc/config/dockerd
+sed -i "s/25.0.3/25.0.5/g" feeds/packages/utils/dockerd/Makefile
+sed -i "s/4cdb516f5d6f5caf8b3bcf93c2962277ba727cfd2d1620176a3bb0cf153b3590/e504743b4d3ad93b6c6ecae90e507f6e2b45423929bb9d3ae5d93ff9c76b6f3a/g" feeds/packages/utils/dockerd/Makefile
+sed -i "/+iptables/d" feeds/packages/utils/dockerd/Makefile
+sed -i "/+IPV6:ip6tables/d" feeds/packages/utils/dockerd/Makefile
+
 # distfeeds.conf settings
 sed -i 's#raw.cooluc.com/sbwml/kmod-x86_64/main#fastly.jsdelivr.net/gh/sbwml/kmod-x86_64@main#g' package/new/default-settings/default/zzz-default-settings
 
