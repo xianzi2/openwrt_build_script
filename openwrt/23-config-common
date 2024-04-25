@@ -121,7 +121,7 @@ CONFIG_PACKAGE_luci-app-zerotier=y
 CONFIG_PACKAGE_luci-app-homeproxy is not set
 
 ### Openclash
-CONFIG_PACKAGE_luci-app-openclash=y
+# CONFIG_PACKAGE_luci-app-openclash is not set
 
 ### Passwall
 CONFIG_PACKAGE_luci-app-passwall=y
