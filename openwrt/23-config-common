@@ -118,7 +118,7 @@ CONFIG_PACKAGE_luci-app-zerotier=y
 # CONFIG_PACKAGE_ariang-nginx is not set
 
 ### ImmortalWrt Proxy - nft
-CONFIG_PACKAGE_luci-app-homeproxy is not set
+CONFIG_PACKAGE_luci-app-homeproxy=y
 
 ### Openclash
 # CONFIG_PACKAGE_luci-app-openclash is not set
