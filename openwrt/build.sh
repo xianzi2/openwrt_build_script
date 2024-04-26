@@ -271,7 +271,7 @@ chmod 0664 xfrpc.po
 sed -i mv xfrpc.po feeds/luci/applications/luci-app-xfrpc/po/zh_Hans/xfrpc.po
 
 # use geoip
-rm -rf package/new/helloworld/v2ray-geodata
+sed -i 's/geoip-only-cn-private.dat/geoip.dat/g' package/new/helloworld/v2ray-geodata/Makefile
 
 # disable docker option iptables
 sed -i "s/iptables '1'/iptables '0'/g" feeds/packages/utils/dockerd/files/etc/config/dockerd
