@@ -268,7 +268,7 @@ rm -rf ../master
 mkdir feeds/luci/applications/luci-app-xfrpc/po/zh_Hans
 curl -sO https://raw.githubusercontent.com/pmkol/openwrt_build_script/x86_64/openwrt/zhcn/xfrpc.po
 chmod 0664 xfrpc.po
-sed -i mv xfrpc.po feeds/luci/applications/luci-app-xfrpc/po/zh_Hans/xfrpc.po
+mv xfrpc.po feeds/luci/applications/luci-app-xfrpc/po/zh_Hans/xfrpc.po
 
 # use geoip
 sed -i 's/geoip-only-cn-private.dat/geoip.dat/g' package/new/helloworld/v2ray-geodata/Makefile
