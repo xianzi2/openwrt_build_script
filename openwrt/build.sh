@@ -268,13 +268,16 @@ rm -rf ../master
 mkdir feeds/luci/applications/luci-app-xfrpc/po/zh_Hans
 curl -sO https://raw.githubusercontent.com/pmkol/openwrt_build_script/x86_64/openwrt/zhcn/xfrpc.po
 chmod 0664 xfrpc.po
-mv xfrpc.po feeds/luci/applications/luci-app-xfrpc/po/zh_Hans/xfrpc.po
+sed -i mv xfrpc.po feeds/luci/applications/luci-app-xfrpc/po/zh_Hans/xfrpc.po
+
+# passwal geoip
+sed -i 's/geoip-only-cn-private.dat/geoip.dat/g' package/new/helloworld/v2ray-geodata/Makefile
 
 # disable docker option iptables
 sed -i "s/iptables '1'/iptables '0'/g" feeds/packages/utils/dockerd/files/etc/config/dockerd
 
 # distfeeds.conf settings
-sed -i 's#raw.cooluc.com/sbwml/kmod-x86_64/main#fastly.jsdelivr.net/gh/sbwml/kmod-x86_64@main#g' package/new/default-settings/default/zzz-default-settings
+sed -i 's#raw.cooluc.com/sbwml/kmod-x86_64/main#gh-proxy.com/https://raw.githubusercontent.com/sbwml/kmod-x86_64/main#g' package/new/default-settings/default/zzz-default-settings
 
 # Load devices Config
 if [ "$platform" = "x86_64" ]; then
