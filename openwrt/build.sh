@@ -273,14 +273,8 @@ mv xfrpc.po feeds/luci/applications/luci-app-xfrpc/po/zh_Hans/xfrpc.po
 # use geoip
 sed -i 's/geoip-only-cn-private.dat/geoip.dat/g' package/new/helloworld/v2ray-geodata/Makefile
 
-# update docker
+# disable docker option iptables
 sed -i "s/iptables '1'/iptables '0'/g" feeds/packages/utils/dockerd/files/etc/config/dockerd
-sed -i "s/25.0.3/25.0.5/g" feeds/packages/utils/dockerd/Makefile
-sed -i "s/4cdb516f5d6f5caf8b3bcf93c2962277ba727cfd2d1620176a3bb0cf153b3590/e504743b4d3ad93b6c6ecae90e507f6e2b45423929bb9d3ae5d93ff9c76b6f3a/g" feeds/packages/utils/dockerd/Makefile
-sed -i "s/f417435/e63daec/g" feeds/packages/utils/dockerd/Makefile
-sed -i "s/25.0.3/25.0.5/g" feeds/packages/utils/docker/Makefile
-sed -i "s/04ad0cea992a65db20cb1b0dbf6d1ce32c705ce879de51b22095fe8d28030815/5e7a07e52dd405ec8acb8ccc7b867342e0609064940e1665fb268480638691c7/g" feeds/packages/utils/docker/Makefile
-sed -i "s/4debf41/7e7b0ee/g" feeds/packages/utils/docker/Makefile
 
 # distfeeds.conf settings
 sed -i 's#raw.cooluc.com/sbwml/kmod-x86_64/main#gh-proxy.com/https://raw.githubusercontent.com/sbwml/kmod-x86_64/main#g' package/new/default-settings/default/zzz-default-settings
