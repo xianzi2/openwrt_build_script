@@ -243,6 +243,7 @@ curl -sO https://$mirror/openwrt/scripts/02-prepare_package.sh
 curl -sO https://$mirror/openwrt/scripts/03-convert_translation.sh
 curl -sO https://$mirror/openwrt/scripts/04-fix_kmod.sh
 curl -sO https://$mirror/openwrt/scripts/05-fix-source.sh
+curl -sO https://$mirror/openwrt/scripts/10-app-customizations.sh
 curl -sO https://$mirror/openwrt/scripts/99_clean_build_cache.sh
 chmod 0755 *sh
 [ "$(whoami)" = "runner" ] && group "patching openwrt"
@@ -250,6 +251,7 @@ bash 00-prepare_base.sh
 bash 02-prepare_package.sh
 bash 03-convert_translation.sh
 bash 05-fix-source.sh
+bash 10-app-customizations.sh
 if [ "$platform" = "rk3568" ] || [ "$platform" = "rk3399" ] || [ "$platform" = "x86_64" ] || [ "$platform" = "bcm53xx" ]; then
     bash 01-prepare_base-mainline.sh
     bash 04-fix_kmod.sh
@@ -263,21 +265,6 @@ fi
 
 rm -f 0*-*.sh
 rm -rf ../master
-
-# xfrpc zh_hans
-mkdir feeds/luci/applications/luci-app-xfrpc/po/zh_Hans
-curl -sO https://raw.githubusercontent.com/pmkol/openwrt_build_script/x86_64/openwrt/zhcn/xfrpc.po
-chmod 0664 xfrpc.po
-mv xfrpc.po feeds/luci/applications/luci-app-xfrpc/po/zh_Hans/xfrpc.po
-
-# use geoip
-sed -i 's/geoip-only-cn-private.dat/geoip.dat/g' package/new/helloworld/v2ray-geodata/Makefile
-
-# disable docker option iptables
-sed -i "s/iptables '1'/iptables '0'/g" feeds/packages/utils/dockerd/files/etc/config/dockerd
-
-# distfeeds.conf settings
-sed -i 's#raw.cooluc.com/sbwml/kmod-x86_64/main#gh-proxy.com/https://raw.githubusercontent.com/sbwml/kmod-x86_64/main#g' package/new/default-settings/default/zzz-default-settings
 
 # Load devices Config
 if [ "$platform" = "x86_64" ]; then
