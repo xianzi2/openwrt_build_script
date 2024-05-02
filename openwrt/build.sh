@@ -387,6 +387,8 @@ if [ "$BUILD" = "n" ]; then
     exit 0
 else
     make defconfig
+    sed -i '/=m/{s/^/# /;s/=m/ is not set/}' .config
+    make defconfig
 fi
 
 # Compile
