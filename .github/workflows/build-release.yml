@@ -121,7 +121,7 @@ jobs:
       continue-on-error: true
       uses: sbwml/release-action@main
       with:
-        name: OpenWRT-${{ env.latest_release }}
+        name: OpenWrt-${{ env.latest_release }}
         allowUpdates: true
         tag: ${{ env.latest_release }}
         body: OpenWrt 23.05 with Kernel 6.6 LTS
