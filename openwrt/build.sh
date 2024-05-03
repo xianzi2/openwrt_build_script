@@ -181,7 +181,7 @@ git clone https://$github/openwrt/routing master/routing --depth=1
 [ "$1" = "rc2" ] && git clone https://$github/openwrt/openwrt -b openwrt-23.05 master/openwrt-23.05 --depth=1
 
 # openclash master
-git clone https://github.com/vernesong/OpenClash master/OpenClash --depth=1
+git clone -b dev https://github.com/vernesong/OpenClash master/OpenClash --depth=1
 if [ -d "master/OpenClash" ]; then
     sed -i 's/("OpenClash"), 50/("OpenClash"), 20/' master/OpenClash/luci-app-openclash/luasrc/controller/openclash.lua
     mkdir -p openwrt/package/feeds/luci
