@@ -1,22 +1,37 @@
-# NanoPi R4S/R5S/R5C & X86_64 OpenWrt 简易构建脚本存档
+# OpenWrt Plus 23.05
 
-### 存档来自：https://init2.cooluc.com
+### NanoPi R4S/R5S/R5C & X86_64 固件下载:
+
+https://github.com/pmkol/openwrt-plus/releases
+
+```
+【首次登陆】
+地址：10.0.0.1（默认）
+用户：root
+密码：空
+
+【分区挂载】
+系统/磁盘管理 将系统盘剩余空间创建新分区
+系统/挂载点   启用新分区并挂载至/opt目录
+```
 
 ---------------
 
-## 基于 Linux 6.6 LTS 固件下载:
+#### 固件编译脚本存档来自：https://init2.cooluc.com 
 
-#### NanoPi R4S: https://r4s.cooluc.com
+- 优化系统内核 [ √ Full cone NAT, √ BBRv3, √ LLVM-BPF, √ Shortcut-FE ]
+- 使用 OpenWrt+ImmortalWrt 软件源，支持更多插件的在线安装与升级
+- 最小化集成常用插件，修复多处上游插件BUG
 
-#### NanoPi R5S/R5C: https://r5s.cooluc.com
+| ⚓ 服务 | 🗳️ Docker | 🔗 网络存储 | 🩺 网络 |
+| :---- |  :----  |  :----  |  :----  |
+| PassWall</br>OpenClash</br>MosDNS</br>硬盘休眠</br>Watchcat</br>Aira2</br>FRP客户端</br>网络共享</br>网络唤醒</br>ZeroTier | Dockerman</br>Docker</br>Dockerd</br>Docker-compose</br></br></br></br></br></br></br> | Alist文件列表</br>USB打印服务器</br>GoWebDav</br></br></br></br></br></br></br></br> | 网速测试</br>SQM队列管理</br>UPnP</br>带宽监控</br>Socat</br>访问控制</br>IP限速</br></br></br></br> |
 
-#### X86_64: https://x86.cooluc.com
-
-#### 构建来源: https://github.com/sbwml/builder
+自定义预装插件建议fork上游原项目，以免因本项目未及时同步上游内核导致编译失败
 
 ---------------
 
-## 本地编译环境安装（根据 debian 11 / ubuntu 22）
+### 本地编译环境安装（根据 debian 11 / ubuntu 22）
 ```shell
 sudo apt-get update
 sudo apt-get install -y build-essential flex bison g++ gawk gcc-multilib g++-multilib gettext git libfuse-dev libncurses5-dev libssl-dev python3 python3-pip python3-ply python3-distutils python3-pyelftools rsync unzip zlib1g-dev file wget subversion patch upx-ucl autoconf automake curl asciidoc binutils bzip2 lib32gcc-s1 libc6-dev-i386 uglifyjs msmtp texinfo libreadline-dev libglib2.0-dev xmlto libelf-dev libtool autopoint antlr3 gperf ccache swig coreutils haveged scons libpython3-dev jq
@@ -128,18 +143,6 @@ export LAN=10.0.0.1
 
 ## 构建 OpenWrt 23.05 最新 Releases
 
-### nanopi-r4s
-```shell
-# linux-6.6
-bash <(curl -sS https://init2.cooluc.com/build.sh) rc2 nanopi-r4s
-```
-
-### nanopi-r5s/r5c
-```shell
-# linux-6.6
-bash <(curl -sS https://init2.cooluc.com/build.sh) rc2 nanopi-r5s
-```
-
 ### x86_64
 ```shell
 # linux-6.6
@@ -147,18 +150,6 @@ bash <(curl -sS https://init2.cooluc.com/build.sh) rc2 x86_64
 ```
 
 ## 构建 OpenWrt 23.05 开发版（23.05-SNAPSHOT）
-
-### nanopi-r4s
-```shell
-# linux-6.6
-bash <(curl -sS https://init2.cooluc.com/build.sh) dev nanopi-r4s
-```
-
-### nanopi-r5s/r5c
-```shell
-# linux-6.6
-bash <(curl -sS https://init2.cooluc.com/build.sh) dev nanopi-r5s
-```
 
 ### x86_64
 ```shell
@@ -190,18 +181,6 @@ bash <(curl -sS https://init2.cooluc.com/build.sh) dev x86_64
 ```
 
 ### 三、在本地 Linux 执行基于你自己仓库的构建脚本，即可编译所需固件
-
-#### nanopi-r4s openwrt-23.05
-```shell
-# linux-6.6
-bash <(curl -sS https://raw.githubusercontent.com/你的用户名/r4s_build_script/master/openwrt/build.sh) rc2 nanopi-r4s
-```
-
-#### nanopi-r5s/r5c openwrt-23.05
-```shell
-# linux-6.6
-bash <(curl -sS https://raw.githubusercontent.com/你的用户名/r4s_build_script/master/openwrt/build.sh) rc2 nanopi-r5s
-```
 
 #### x86_64 openwrt-23.05
 ```shell
