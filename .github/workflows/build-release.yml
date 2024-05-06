@@ -63,14 +63,18 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo sh -c 'echo "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-17 main" >> /etc/apt/sources.list'
-        sudo sh -c 'echo "deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-17 main" >> /etc/apt/sources.list'
-        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
         sudo apt-get update
-        sudo apt-get install -y build-essential flex bison clang-17 cmake g++ gawk gcc-multilib g++-multilib gettext git libfuse-dev libncurses5-dev libssl-dev python3 python3-pip python3-ply python3-distutils python3-pyelftools rsync unzip zlib1g-dev file wget subversion patch upx-ucl autoconf automake curl asciidoc binutils bzip2 lib32gcc-s1 libc6-dev-i386 uglifyjs msmtp texinfo libreadline-dev libglib2.0-dev xmlto libelf-dev libtool autopoint antlr3 gperf ccache swig coreutils haveged scons libpython3-dev rename qemu-utils
+        sudo apt-get install -y build-essential flex bison cmake g++ gawk gcc-multilib g++-multilib gettext git libfuse-dev libncurses5-dev libssl-dev python3 python3-pip python3-ply python3-distutils python3-pyelftools rsync unzip zlib1g-dev file wget subversion patch upx-ucl autoconf automake curl asciidoc binutils bzip2 lib32gcc-s1 libc6-dev-i386 uglifyjs msmtp texinfo libreadline-dev libglib2.0-dev xmlto libelf-dev libtool autopoint antlr3 gperf ccache swig coreutils haveged scons libpython3-dev rename qemu-utils
         sudo apt-get clean
         git config --global user.name 'GitHub Actions' && git config --global user.email 'noreply@github.com'
-        df -Th
+
+    - name: Install LLVM
+      run: |
+        export PATH="/opt/clang/bin:$PATH"
+        mkdir /opt/clang
+        curl -LO https://github.com/sbwml/ubuntu-llvm-project/releases/download/17.0.6/clang-17.0.6-x86_64-ubuntu-22.04.tar.xz --progress-bar
+        sudo tar --strip-components=1 -C /opt/clang -xf clang-17.0.6-x86_64-ubuntu-22.04.tar.xz
+        clang --version
 
     - name: Compile OpenWrt
       working-directory: /builder
@@ -78,15 +82,19 @@ jobs:
       continue-on-error: true
       run: |
         export GITHUB_REPO=${{ github.repository }}
-        BUILD_FAST=y ENABLE_LTO=y ENABLE_LRNG=y ENABLE_BPF=y USE_GCC13=y USE_MOLD=y bash <(curl -sS https://raw.githubusercontent.com/${{ github.repository }}/master/openwrt/build.sh) ${{ matrix.tag.type }} ${{ matrix.model }}
+        export PATH="/opt/clang/bin:$PATH"
+        [ "${{ matrix.model }}" != "netgear_r8500" ] && export KERNEL_CLANG_LTO=y
+        BUILD_FAST=y ENABLE_UHTTPD=y ENABLE_BPF=y ENABLE_LTO=y ENABLE_LRNG=y USE_GCC14=y USE_MOLD=y bash <(curl -sS https://raw.githubusercontent.com/${{ github.repository }}/master/openwrt/build.sh) ${{ matrix.tag.type }} ${{ matrix.model }}
         cd openwrt
         tags=$(git describe --abbrev=0 --tags)
-        echo "latest_release=$tags" >>$GITHUB_ENV
+        kernel=$(curl -s "https://raw.githubusercontent.com/${{ github.repository }}/master/tags/kernel-6.6" | awk -F"LINUX_KERNEL_HASH-| =" '/LINUX_KERNEL_HASH/{print $2}')
+        echo "latest_release=$tags-k$kernel" >>$GITHUB_ENV
 
     - name: Extensive logs after a failed compilation
       working-directory: /builder
       if: steps.compile.outcome == 'failure'
       run: |
+        export PATH="/opt/clang/bin:$PATH"
         cd openwrt
         make V=s
 
@@ -107,7 +115,6 @@ jobs:
         elif [ "${{ matrix.model }}" = "x86_64" ]; then
           cp -a openwrt/bin/targets/x86/*/*-ext4-combined-efi.img.gz rom/
           cp -a openwrt/bin/targets/x86/*/*-squashfs-combined-efi.img.gz rom/
-          cp -a openwrt/bin/targets/x86/*/*-generic-rootfs.tar.gz rom/
           cp -a openwrt/bin/targets/x86/*/*-x86-64-generic.manifest info/manifest.txt
           cp -a openwrt/bin/targets/x86/*/config.buildinfo info/config.buildinfo
           cd rom && sha256sum *gz > ../info/sha256sums.txt
@@ -123,9 +130,10 @@ jobs:
       continue-on-error: true
       uses: sbwml/release-action@main
       with:
-        name: OpenWRT-${{ env.latest_release }}
+        name: OpenWrt-${{ env.latest_release }}
         allowUpdates: true
         tag: ${{ env.latest_release }}
+        body: OpenWrt 23.05 with Kernel 6.6 Enhanced
         commit: master
         replacesArtifacts: true
         token: ${{ secrets.GITHUB_TOKEN }}
