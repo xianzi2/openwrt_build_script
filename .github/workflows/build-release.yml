@@ -83,7 +83,7 @@ jobs:
       run: |
         export GITHUB_REPO=${{ github.repository }}
         export PATH="/opt/clang/bin:$PATH"
-        [ "${{ matrix.model }}" != "netgear_r8500" ] && export KERNEL_CLANG_LTO=y
+        [ "${{ matrix.model }}" != "netgear_r8500" -a "${{ matrix.model }}" != "x86_64" ] && export KERNEL_CLANG_LTO=y
         BUILD_FAST=y ENABLE_UHTTPD=y ENABLE_BPF=y ENABLE_LTO=y ENABLE_LRNG=y USE_GCC14=y USE_MOLD=y bash <(curl -sS https://raw.githubusercontent.com/${{ github.repository }}/master/openwrt/build.sh) ${{ matrix.tag.type }} ${{ matrix.model }}
         cd openwrt
         tags=$(git describe --abbrev=0 --tags)
