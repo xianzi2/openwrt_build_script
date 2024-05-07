@@ -1,6 +1,6 @@
 # OpenWrt Plus 23.05
 
-### NanoPi R4S/R5S/R5C & X86_64 固件下载:
+### NanoPi R4S/R5S & X86_64 固件下载:
 
 https://github.com/pmkol/openwrt-plus/releases
 
