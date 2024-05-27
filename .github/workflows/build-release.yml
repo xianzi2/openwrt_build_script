@@ -16,7 +16,6 @@ jobs:
       fail-fast: false
       matrix:
         model:
-          - armv8
           - nanopi-r4s
           - nanopi-r5s
           - x86_64
