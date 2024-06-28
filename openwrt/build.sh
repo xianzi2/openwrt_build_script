@@ -256,6 +256,8 @@ curl -sO https://$mirror/openwrt/scripts/02-prepare_package.sh
 curl -sO https://$mirror/openwrt/scripts/03-convert_translation.sh
 curl -sO https://$mirror/openwrt/scripts/04-fix_kmod.sh
 curl -sO https://$mirror/openwrt/scripts/05-fix-source.sh
+curl -sO https://$mirror/openwrt/scripts/10-customize-config.sh
+curl -sO https://$mirror/openwrt/scripts/11-fix-vendor.sh
 curl -sO https://$mirror/openwrt/scripts/99_clean_build_cache.sh
 chmod 0755 *sh
 [ "$(whoami)" = "runner" ] && group "patching openwrt"
@@ -265,6 +267,10 @@ bash 02-prepare_package.sh
 bash 03-convert_translation.sh
 bash 04-fix_kmod.sh
 bash 05-fix-source.sh
+bash 10-customize-config.sh
+if [ "$platform" = "x86_64" ] || [ "$platform" = "armv8" ]; then
+    bash 11-fix-vendor.sh
+fi
 [ "$(whoami)" = "runner" ] && endgroup
 
 if [ "$USE_GCC14" = "y" ] || [ "$USE_GCC15" = "y" ]; then
