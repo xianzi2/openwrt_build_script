@@ -4,11 +4,13 @@ rm -rf package/new/helloworld/patch-luci-app-ssr-plus.patch
 
 # add mihomo
 git clone https://$github/pmkol/openwrt-mihomo package/new/openwrt-mihomo
-mkdir -p package/new/openwrt-mihomo/luci-app-mihomo/root/etc/mihomo/run/ui
-curl -Lso package/new/openwrt-mihomo/luci-app-mihomo/root/etc/mihomo/run/Country.mmdb https://$github/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb
+if [ "$(whoami)" = "runner" ]; then
+mkdir -p /builder/openwrt/files/etc/mihomo/run/ui
+curl -Lso /builder/openwrt/files/etc/mihomo/run/Country.mmdb https://$github/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb
 curl -Lso metacubexd-gh-pages.tar.gz https://$github/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.tar.gz
 tar zxf metacubexd-gh-pages.tar.gz
-mv metacubexd-gh-pages package/new/openwrt-mihomo/luci-app-mihomo/root/etc/mihomo/run/ui/metacubexd
+mv metacubexd-gh-pages /builder/openwrt/files/etc/mihomo/run/ui/metacubexd
+fi
 
 # change geodata
 rm -rf package/new/helloworld/v2ray-geodata
