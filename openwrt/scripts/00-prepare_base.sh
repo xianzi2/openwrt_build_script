@@ -29,6 +29,10 @@ curl -s https://$mirror/openwrt/patch/generic/0003-kernel-Add-support-for-llvm-c
 # toolchain: Add libquadmath to the toolchain
 curl -s https://$mirror/openwrt/patch/generic/0004-libquadmath-Add-libquadmath-to-the-toolchain.patch | patch -p1
 
+# rootfs: add r/w (0600) permissions for UCI configuration files
+# include/rootfs.mk
+curl -s https://$mirror/openwrt/patch/generic/0005-rootfs-add-r-w-permissions-for-UCI-configuration-fil.patch | patch -p1
+
 # meson: add platform variable to cross-compilation file
 curl -s https://$mirror/openwrt/patch/generic/010-meson-add-platform-variable-to-cross-compilation-file.patch | patch -p1
 
@@ -276,6 +280,7 @@ sed -i '/sysctl.d/d' feeds/packages/utils/dockerd/Makefile
 pushd feeds/packages
     curl -s https://$mirror/openwrt/patch/docker/0001-dockerd-fix-bridge-network.patch | patch -p1
     curl -s https://$mirror/openwrt/patch/docker/0002-docker-add-buildkit-experimental-support.patch | patch -p1
+    curl -s https://$mirror/openwrt/patch/docker/0003-dockerd-disable-ip6tables-for-bridge-network-by-defa.patch | patch -p1
 popd
 
 # cgroupfs-mount
