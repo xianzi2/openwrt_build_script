@@ -2,6 +2,14 @@ name: Build releases
 
 on:
   workflow_dispatch:
+    inputs:
+      device:
+        description: 'Select device to build'
+        required: true
+        default: 'nanopi-r5s'
+        type: choice
+        options:
+          - 'x86_64'
 
 jobs:
   build:
@@ -10,14 +18,6 @@ jobs:
     defaults:
       run:
         shell: bash
-    strategy:
-      fail-fast: false
-      matrix:
-        model:
-          - x86_64
-        tag:
-          - type: rc2
-            version: openwrt-23.05
 
     steps:
     - name: Setup variables
@@ -61,8 +61,7 @@ jobs:
         BUILD_FAST=y ENABLE_LTO=y ENABLE_LRNG=y ENABLE_BPF=y USE_GCC13=y USE_MOLD=y bash <(curl -sS https://raw.githubusercontent.com/${{ github.repository }}/master/openwrt/build.sh) rc2 ${{ github.event.inputs.device }}
         cd openwrt
         tags=$(git describe --abbrev=0 --tags)
-        kernel=$(curl -s "https://raw.githubusercontent.com/${{ github.repository }}/master/tags/kernel-6.6" | awk -F"LINUX_KERNEL_HASH-| =" '/LINUX_KERNEL_HASH/{print $2}')
-        echo "latest_release=$tags-k$kernel" >>$GITHUB_ENV
+        echo "latest_release=$tags" >>$GITHUB_ENV
 
     - name: Extensive logs after a failed compilation
       working-directory: /builder
@@ -88,6 +87,7 @@ jobs:
         elif [ "${{ github.event.inputs.device }}" = "x86_64" ]; then
           cp -a openwrt/bin/targets/x86/*/*-ext4-combined-efi.img.gz rom/
           cp -a openwrt/bin/targets/x86/*/*-squashfs-combined-efi.img.gz rom/
+          cp -a openwrt/bin/targets/x86/*/*-generic-rootfs.tar.gz rom/
           cp -a openwrt/bin/targets/x86/*/*-x86-64-generic.manifest info/manifest.txt
           cp -a openwrt/bin/targets/x86/*/config.buildinfo info/config.buildinfo
           cd rom && sha256sum *gz > ../info/sha256sums.txt
@@ -97,6 +97,7 @@ jobs:
           cp -a openwrt/bin/targets/armsr/armv8*/*-generic-kernel.bin rom/
           cp -a openwrt/bin/targets/armsr/armv8*/*-generic-ext4-combined-efi.img.gz rom/
           cp -a openwrt/bin/targets/armsr/armv8*/*-generic-squashfs-combined-efi.img.gz rom/
+          cp -a openwrt/bin/targets/armsr/armv8*/*-rootfs.tar.gz rom/
           cp -a openwrt/bin/targets/armsr/armv8*/*.manifest info/manifest.txt
           cp -a openwrt/bin/targets/armsr/armv8*/config.buildinfo info/config.buildinfo
           cd rom && sha256sum * > ../info/sha256sums.txt
@@ -115,7 +116,6 @@ jobs:
         name: OpenWrt-${{ env.latest_release }}
         allowUpdates: true
         tag: ${{ env.latest_release }}
-        body: OpenWrt 23.05 with Kernel 6.6 Enhanced
         commit: master
         replacesArtifacts: true
         token: ${{ secrets.GITHUB_TOKEN }}
