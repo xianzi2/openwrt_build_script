@@ -21,6 +21,12 @@ sed -i 's#Loyalsoldier/geoip/releases/latest/download/geoip-only-cn-private.dat#
 sed -i '/geoip_api/s#Loyalsoldier/v2ray-rules-dat#pmkol/geodata-lite#' package/new/helloworld/luci-app-passwall/root/usr/share/passwall/rule_update.lua
 sed -i '/geosite_api/s#Loyalsoldier/v2ray-rules-dat#MetaCubeX/meta-rules-dat#' package/new/helloworld/luci-app-passwall/root/usr/share/passwall/rule_update.lua
 
+# openclash
+git clone -b dev https://github.com/vernesong/OpenClash package/feeds/luci/openclash --depth=1
+mv package/feeds/luci/openclash/luci-app-openclash package/feeds/luci/luci-app-openclash
+rm -rf package/feeds/luci/openclash
+sed -i 's/("OpenClash"), 50/("OpenClash"), 20/' package/feeds/luci/luci-app-openclash/luasrc/controller/openclash.lua
+
 # configure default-settings
 sed -i 's/openwrt\/luci/pmkol\/openwrt-plus/g' package/new/luci-theme-argon/luci-theme-argon/luasrc/view/themes/argon/footer.htm
 sed -i 's/openwrt\/luci/pmkol\/openwrt-plus/g' package/new/luci-theme-argon/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
