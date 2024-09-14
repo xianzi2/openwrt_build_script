@@ -14,6 +14,12 @@ if curl -s "https://$mirror/openwrt/23-config-common" | grep -q "^CONFIG_PACKAGE
     mv metacubexd-gh-pages files/etc/mihomo/run/ui/metacubexd
 fi
 
+# openclash
+git clone -b dev https://github.com/vernesong/OpenClash package/feeds/luci/openclash --depth=1
+mv package/feeds/luci/openclash/luci-app-openclash package/feeds/luci/luci-app-openclash
+rm -rf package/feeds/luci/openclash
+sed -i 's/("OpenClash"), 50/("OpenClash"), 20/' package/feeds/luci/luci-app-openclash/luasrc/controller/openclash.lua
+
 # change geodata
 rm -rf package/new/helloworld/v2ray-geodata
 git clone https://$github/sbwml/v2ray-geodata package/new/helloworld/v2ray-geodata
