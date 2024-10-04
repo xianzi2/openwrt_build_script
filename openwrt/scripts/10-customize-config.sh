@@ -30,6 +30,12 @@ else
     fi
 fi
 
+# add openclash
+git clone -b dev https://github.com/vernesong/OpenClash package/feeds/luci/openclash --depth=1
+mv package/feeds/luci/openclash/luci-app-openclash package/feeds/luci/luci-app-openclash
+rm -rf package/feeds/luci/openclash
+sed -i 's/("OpenClash"), 50/("OpenClash"), 20/' package/feeds/luci/luci-app-openclash/luasrc/controller/openclash.lua
+
 # add ddns-go
 git clone https://$github/sirpdboy/luci-app-ddns-go package/new/ddns-go
 sed -i '/"description": "Grant UCI access for luci-app-ddns-go",/a \\t\t"order": 50,' package/new/ddns-go/luci-app-ddns-go/root/usr/share/rpcd/acl.d/luci-app-ddns-go.json
