@@ -4,9 +4,9 @@
 
 # fallback udp_offload to kernel 6.6.43
 if [ "$version" = "rc2" ]; then
-    curl -s https://raw.githubusercontent.com/pmkol/openwrt-lite/patch/linux/hack-6.6/099-udp_offload-backto-43.patch > target/linux/generic/hack-6.6/099-udp_offload-backto-43.patch
+    #curl -s https://raw.githubusercontent.com/pmkol/openwrt-lite/patch/linux/hack-6.6/099-udp_offload-backto-43.patch > target/linux/generic/hack-6.6/099-udp_offload-backto-43.patch
     curl -s https://raw.githubusercontent.com/pmkol/openwrt-lite/patch/linux/backport-6.6/099-udp-Compute-L4-checksum-as-usual-when-not-segmenting-the-skb.patch > target/linux/generic/backport-6.6/999-udp-Compute-L4-checksum-as-usual-when-not-segmenting-the-skb.patch
-    rm -rf target/linux/generic/‎backport-6.6/611-03-v6.11-udp-Fall-back-to-software-USO-if-IPv6-extension-head.patch
+    #rm -rf target/linux/generic/‎backport-6.6/611-03-v6.11-udp-Fall-back-to-software-USO-if-IPv6-extension-head.patch
 fi
 
 # fallback uboot-rockchip version
