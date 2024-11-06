@@ -15,8 +15,6 @@ jobs:
       fail-fast: false
       matrix:
         model:
-          - nanopi-r4s
-          - nanopi-r5s
           - x86_64
         tag:
           - type: rc2
